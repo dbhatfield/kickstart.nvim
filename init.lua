@@ -91,7 +91,7 @@ vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
 -- Set to true if you have a Nerd Font installed and selected in the terminal
-vim.g.have_nerd_font = false
+vim.g.have_nerd_font = true
 
 -- [[ Setting options ]]
 -- See `:help vim.opt`
@@ -159,6 +159,9 @@ vim.opt.scrolloff = 10
 -- Set default tab and shift width in a file
 vim.opt.tabstop = 4
 vim.opt.shiftwidth = 4
+
+-- Set gui colors
+vim.opt.termguicolors = true
 
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
@@ -282,7 +285,7 @@ require('lazy').setup({
       delay = 0,
       icons = {
         -- set icon mappings to true if you have a Nerd Font
-        mappings = vim.g.have_nerd_font,
+        mappings = true,
         -- If you are using a Nerd Font: set icons.keys to an empty table which will use the
         -- default which-key.nvim defined Nerd Font icons, otherwise define a string table
         keys = vim.g.have_nerd_font and {} or {
@@ -868,6 +871,9 @@ require('lazy').setup({
   { -- Collection of various small independent plugins/modules
     'echasnovski/mini.nvim',
     config = function()
+      -- Unmap s key for the surround plugin binding
+      vim.keymap.set({ 'n', 'x' }, 's', '<Nop>')
+
       -- Better Around/Inside textobjects
       --
       -- Examples:
@@ -882,6 +888,12 @@ require('lazy').setup({
       -- - sd'   - [S]urround [D]elete [']quotes
       -- - sr)'  - [S]urround [R]eplace [)] [']
       require('mini.surround').setup()
+
+      -- Add fallback icon provider for file types in case nerdfont
+      -- is not installed on the system
+      require('mini.icons').setup()
+
+      MiniIcons.mock_nvim_web_devicons()
 
       -- Simple and easy statusline.
       --  You could remove this setup call if you don't like it,
