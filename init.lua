@@ -196,6 +196,12 @@ vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right win
 vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
 vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 
+-- Keybinds to remap some buffer navigation
+vim.keymap.set('n', ']b', '<CMD>bnext<CR>', { desc = 'Next buffer' })
+vim.keymap.set('n', '[b', '<CMD>bprev<CR>', { desc = 'Previous buffer' })
+vim.keymap.set('n', ']B', '<CMD>bfirst<CR>', { desc = 'First buffer' })
+vim.keymap.set('n', '[B', '<CMD>blast<CR>', { desc = 'Last buffer' })
+
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
 
@@ -892,7 +898,6 @@ require('lazy').setup({
       -- Add fallback icon provider for file types in case nerdfont
       -- is not installed on the system
       require('mini.icons').setup()
-
       MiniIcons.mock_nvim_web_devicons()
 
       -- Simple and easy statusline.
@@ -920,7 +925,7 @@ require('lazy').setup({
     main = 'nvim-treesitter.configs', -- Sets main module to use for opts
     -- [[ Configure Treesitter ]] See `:help nvim-treesitter`
     opts = {
-      ensure_installed = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc' },
+      ensure_installed = { 'gitcommit', 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc' },
       -- Autoinstall languages that are not installed
       auto_install = true,
       highlight = {
