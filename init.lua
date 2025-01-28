@@ -897,7 +897,9 @@ require('lazy').setup({
 
       -- Add fallback icon provider for file types in case nerdfont
       -- is not installed on the system
-      require('mini.icons').setup()
+      require('mini.icons').setup {
+        style = vim.g.have_nerd_font and 'glyph' or 'ascii',
+      }
       MiniIcons.mock_nvim_web_devicons()
 
       -- Simple and easy statusline.
