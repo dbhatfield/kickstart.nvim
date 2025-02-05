@@ -11,7 +11,7 @@ ls.add_snippets('xml', {
   -- General purpose definitions
 
   s(
-    '<~',
+    '<block',
     fmt(
       [[
       <{}>
@@ -28,7 +28,7 @@ ls.add_snippets('xml', {
 
   -- TOT snippet definitions
 
-  s(';newline', t '&#10;'),
+  s(';newline', t '&#xA;'),
 
   s(
     '<attr',
