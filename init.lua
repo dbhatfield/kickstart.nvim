@@ -93,6 +93,14 @@ vim.g.maplocalleader = ' '
 -- Set to true if you have a Nerd Font installed and selected in the terminal
 vim.g.have_nerd_font = true
 
+-- Set the shell Vim will use by default
+if vim.fn.has 'macunix' then
+  -- ToDo: Add linux fish shell path
+  -- vim.opt.shell = ''
+else
+  vim.opt.shell = 'C:/Program Files/PowerShell/7/pwsh.exe'
+end
+
 -- [[ Setting options ]]
 -- See `:help vim.opt`
 -- NOTE: You can change these options as you wish!
