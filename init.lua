@@ -94,9 +94,8 @@ vim.g.maplocalleader = ' '
 vim.g.have_nerd_font = true
 
 -- Set the shell Vim will use by default
-if vim.fn.has 'macunix' then
-  -- ToDo: Add linux fish shell path
-  -- vim.opt.shell = ''
+if vim.fn.has 'unix' then
+  vim.opt.shell = '/bin/fish'
 else
   vim.opt.shell = 'C:/Program Files/PowerShell/7/pwsh.exe'
 end
