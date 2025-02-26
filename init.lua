@@ -94,10 +94,17 @@ vim.g.maplocalleader = ' '
 vim.g.have_nerd_font = true
 
 -- Set the shell Vim will use by default
-if vim.fn.has 'unix' then
+if vim.fn.has 'windows' then
+  vim.opt.shell = 'pwsh'
+  -- Janky logic to have powershell work with nvim correctly
+  vim.opt.shellcmdflag =
+    "-NoProfile -NoLogo -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.UTF8Encoding]::new();$PSDefaultParameterValues['Out-File:Encoding']='utf8';$PSStyle.OutputRendering = [System.Management.Automation.OutputRendering]::PlainText;"
+  vim.opt.shellredir = '2>&1 | %%{ "$_" } | Out-File %s; exit $LastExitCode'
+  vim.opt.shellpipe = '2>&1 | %%{ "$_" } | Tee-Object %s; exit $LastExitCode'
+  vim.opt.shellquote = ''
+  vim.opt.shellxquote = ''
+elseif vim.fn.has 'unix' then
   vim.opt.shell = '/bin/fish'
-else
-  vim.opt.shell = 'C:/Program Files/PowerShell/7/pwsh.exe'
 end
 
 -- [[ Setting options ]]
