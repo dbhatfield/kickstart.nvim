@@ -504,7 +504,7 @@ require('lazy').setup({
       { 'j-hui/fidget.nvim', opts = {} },
 
       -- Allows extra capabilities provided by nvim-cmp
-      'hrsh7th/cmp-nvim-lsp',
+      'saghen/blink.cmp',
     },
     config = function()
       -- Brief aside: **What is LSP?**
@@ -673,8 +673,7 @@ require('lazy').setup({
       --  By default, Neovim doesn't support everything that is in the LSP specification.
       --  When you add nvim-cmp, luasnip, etc. Neovim now has *more* capabilities.
       --  So, we create new capabilities with nvim cmp, and then broadcast that to the servers.
-      local capabilities = vim.lsp.protocol.make_client_capabilities()
-      capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
+      local capabilities = require('blink.cmp').get_lsp_capabilities()
 
       -- Enable the following language servers
       --  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
@@ -736,6 +735,7 @@ require('lazy').setup({
 
       require('mason-lspconfig').setup {
         handlers = {
+          rust_analyzer = function() end,
           function(server_name)
             local server = servers[server_name] or {}
             -- This handles overriding only values explicitly passed
@@ -822,6 +822,24 @@ require('lazy').setup({
         ['<C-h>'] = { 'snippet_backward', 'fallback' },
       },
 
+      completion = {
+        documentation = {
+          auto_show = true,
+          auto_show_delay_ms = 500,
+        },
+      },
+
+      signature = { enabled = true },
+
+      cmdline = {
+        enabled = true,
+        completion = {
+          menu = {
+            auto_show = true,
+          },
+        },
+      },
+
       appearance = {
         -- Sets the fallback highlight groups to nvim-cmp's highlight groups
         -- Useful for when your theme doesn't support blink.cmp
@@ -837,6 +855,8 @@ require('lazy').setup({
       sources = {
         default = { 'lsp', 'path', 'snippets', 'buffer' },
       },
+
+      fuzzy = { implementation = 'prefer_rust_with_warning' },
 
       snippets = { preset = 'luasnip' },
     },
@@ -982,7 +1002,10 @@ require('lazy').setup({
   -- Highlight todo, notes, etc in comments
   { 'folke/todo-comments.nvim', event = 'VimEnter', dependencies = { 'nvim-lua/plenary.nvim' }, opts = { signs = false } },
 
-  { 'andymass/vim-matchup' },
+  {
+    'andymass/vim-matchup',
+    event = 'CursorMoved',
+  },
 
   { -- Collection of various small independent plugins/modules
     'echasnovski/mini.nvim',
