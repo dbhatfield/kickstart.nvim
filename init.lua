@@ -99,7 +99,7 @@ if vim.g.neovide then
 end
 
 -- Set the shell Vim will use by default
-if vim.fn.has 'windows' then
+if vim.fn.has 'win32' == 1 then
   vim.opt.shell = 'pwsh'
   -- Janky logic to have powershell work with nvim correctly
   vim.opt.shellcmdflag =
@@ -108,8 +108,8 @@ if vim.fn.has 'windows' then
   vim.opt.shellpipe = '2>&1 | %%{ "$_" } | Tee-Object %s; exit $LastExitCode'
   vim.opt.shellquote = ''
   vim.opt.shellxquote = ''
-elseif vim.fn.has 'unix' then
-  vim.opt.shell = '/bin/fish'
+elseif vim.fn.has 'unix' == 1 and vim.fn.executable 'fish' == 1 then
+  vim.opt.shell = 'fish'
 end
 
 -- [[ Setting options ]]
@@ -384,7 +384,6 @@ require('lazy').setup({
         { '<leader>t', group = '[T]oggle' },
         { '<leader>h', group = 'Git [H]unk', mode = { 'n', 'v' } },
         { '<leader>n', group = 'Harpoo[N]' },
-        { '<leader>a', group = '[A]I Companion' },
       },
     },
   },
